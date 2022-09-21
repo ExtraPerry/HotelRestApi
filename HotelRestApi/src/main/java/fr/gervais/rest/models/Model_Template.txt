@@ -1,0 +1,56 @@
+enum - RoomType
+    VIP
+    KING
+    STANDARD
+    
+HashMap<RoomType, RoomInfo>
+
+Class - RoomInfo
+    price
+    size
+
+Class - Room
+    id
+    roomType
+    list<Reservation>
+
+Class - Reservation
+    id
+    dateStart
+    dateEnd
+    list<Room>
+    price
+
+Class - User
+    id
+    login
+    password
+    name
+    mail
+    phone
+    list<Reservation>
+
+Endpoints -
+	GET /users
+	GET /users/{id}
+	POST /sign_up
+	UPDATE /users/{id}
+	DELETE /users/{id}
+	
+	GET /rooms
+	GET /rooms/{id}
+	POST /rooms
+	UPDATE /rooms/{id}
+	DELETE /rooms/{id}
+	
+	GET /reservations
+	GET /reservations/{id}
+	POST /reservations
+	UPDATE /reservations/{id}
+	DELETE /reservations/{id}
+	
+	POST /billing
+	POST /findAvailableRoom
+	    size
+	    dateStart
+	    dateEnd

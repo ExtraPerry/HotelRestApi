@@ -1,4 +1,4 @@
-package fr.gervais.rest;
+package fr.gervais.rest.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
