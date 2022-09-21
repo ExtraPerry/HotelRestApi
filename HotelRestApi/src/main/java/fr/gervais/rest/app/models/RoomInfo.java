@@ -1,4 +1,4 @@
-package fr.gervais.rest.models;
+package fr.gervais.rest.app.models;
 
 public class RoomInfo {
 	

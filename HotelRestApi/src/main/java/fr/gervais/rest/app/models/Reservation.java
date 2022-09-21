@@ -1,4 +1,4 @@
-package fr.gervais.rest.models;
+package fr.gervais.rest.app.models;
 
 import java.sql.Timestamp; //Use sql.Timestamp ==> (int year, int month, int date, int hour, int minute, int second, int nano).
 import java.util.ArrayList;
