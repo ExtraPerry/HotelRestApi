@@ -18,7 +18,7 @@ public class ApiControllers {
 	//Attributes.
 	
 	@Autowired	//Assign to the database.
-	private UsersRepository profileRepo;
+	private UsersRepository userRepo;
 	@Autowired	//Assign to the database.
 	private RoomsRepository roomRepo;
 	@Autowired	//Assign to the database.
@@ -33,7 +33,7 @@ public class ApiControllers {
 	
 	@GetMapping(value = "/users")
 	public Iterable<User> getUsers() {
-		return getProfileRepo().findAll();
+		return getUserRepo().findAll();
 	}
 	
 	@GetMapping(value = "/rooms")
@@ -52,13 +52,13 @@ public class ApiControllers {
 	public void addRandomUser() {
 		String vRandomUsername = "R_User_" + Math.random();
 		User vRandomUser = new User(vRandomUsername, vRandomUsername, "default", "Random@mail.com", "Random_Number");
-		this.getProfileRepo().save(vRandomUser);
+		this.getUserRepo().save(vRandomUser);
 	}
 	
 	//Get'er Methods.
 	
-	public UsersRepository getProfileRepo() {
-		return this.profileRepo;
+	public UsersRepository getUserRepo() {
+		return this.userRepo;
 	}
 
 	public RoomsRepository getRoomRepo() {
