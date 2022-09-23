@@ -9,8 +9,14 @@ import fr.gervais.rest.app.repositories.UsersRepository;
 
 //SpringBoot classes.
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class ApiControllers {
@@ -46,14 +52,40 @@ public class ApiControllers {
 		return getReservationRepo().findAll();
 	}
 
-	//Put Mapping Methods.
+	//POST Mapping Methods.
 	
-	@GetMapping(value = "/addRandomUser")
-	public void addRandomUser() {
-		String vRandomUsername = "R_User_" + Math.random();
-		User vRandomUser = new User(vRandomUsername, vRandomUsername, "default", "Random@mail.com", "Random_Number");
-		this.getUserRepo().save(vRandomUser);
+	@PostMapping(value = "/addUser")	//Add a single user.
+	public void addUser(@RequestBody User user) {
+		getUserRepo().save(user);
 	}
+	
+	@PostMapping(value = "/addUsers")	//Add multiple users at a time.
+	public void addUsers(@RequestBody Iterable<User> users) {
+		for(User vElement : users) {
+			getUserRepo().save(vElement);
+		}
+	}
+	
+	@PostMapping(value = "/addRandomUser")	//Generate a random user.
+	public void addRandomUser() {
+		String randomNumber = "" + Math.random();
+		String randomUsername = "rUser" + randomNumber.substring(2);
+		User randomUser = new User(randomUsername, "default", randomUsername,  "Random@mail.com", "Random_Number");
+		getUserRepo().save(randomUser);
+	}
+	
+	@PostMapping(value = "/addRoom")	//Add a single room.
+	public void addRoom(@RequestBody Room room) {
+		getRoomRepo().save(room);
+	}
+	
+	@PostMapping(value = "/addRooms")	//Add multiple rooms at a time.
+	public void addRooms(@RequestBody Iterable<Room> rooms) {
+		for(Room vElement : rooms) {
+			getRoomRepo().save(vElement);
+		}
+	}
+
 	
 	//Get'er Methods.
 	
