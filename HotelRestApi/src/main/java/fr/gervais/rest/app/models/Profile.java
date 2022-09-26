@@ -1,15 +1,20 @@
 package fr.gervais.rest.app.models;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "Profile")
-public class User {
+public class Profile {
 	
 	//Attributes.
 	@Id
@@ -25,14 +30,18 @@ public class User {
 	private String name;
 	private String mail;
 	private String phone;
+	
+	@JsonIgnore
+    @ManyToMany(mappedBy = "profileReservations")
+    private Set<Reservation> reservations = new HashSet<>();
 
 	//Constructors.
 	
-	public User() {
+	public Profile() {
 		
 	}
 
-	public User(String login, String password, String name, String mail, String phone) {
+	public Profile(String login, String password, String name, String mail, String phone) {
 		super();
 		this.login = login;
 		this.password = password;
@@ -65,6 +74,10 @@ public class User {
 
 	public String getphone() {
 		return this.phone;
+	}
+	
+	public Set<Reservation> getReservations() {
+		return this.reservations;
 	}
 
 	public void setlogin(String login) {

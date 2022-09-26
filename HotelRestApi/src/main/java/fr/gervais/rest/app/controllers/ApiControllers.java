@@ -2,14 +2,17 @@ package fr.gervais.rest.app.controllers;
 
 import fr.gervais.rest.app.models.Reservation;
 import fr.gervais.rest.app.models.Room;
-import fr.gervais.rest.app.models.User;
+import fr.gervais.rest.app.models.Profile;
 import fr.gervais.rest.app.repositories.ReservationsRepository;
 import fr.gervais.rest.app.repositories.RoomsRepository;
-import fr.gervais.rest.app.repositories.UsersRepository;
+import fr.gervais.rest.app.repositories.ProfilesRepository;
 
 //SpringBoot classes.
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Timestamp;
+import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,7 @@ public class ApiControllers {
 	//Attributes.
 	
 	@Autowired	//Assign to the database.
-	private UsersRepository userRepo;
+	private ProfilesRepository profileRepo;
 	@Autowired	//Assign to the database.
 	private RoomsRepository roomRepo;
 	@Autowired	//Assign to the database.
@@ -38,8 +41,8 @@ public class ApiControllers {
 	}
 	
 	@GetMapping(value = "/users")
-	public Iterable<User> getUsers() {
-		return getUserRepo().findAll();
+	public Iterable<Profile> getUsers() {
+		return getProfileRepo().findAll();
 	}
 	
 	@GetMapping(value = "/rooms")
@@ -55,14 +58,14 @@ public class ApiControllers {
 	//POST Mapping Methods.
 	
 	@PostMapping(value = "/addUser")	//Add a single user.
-	public void addUser(@RequestBody User user) {
-		getUserRepo().save(user);
+	public void addUser(@RequestBody Profile profile) {
+		getProfileRepo().save(profile);
 	}
 	
 	@PostMapping(value = "/addUsers")	//Add multiple users at a time.
-	public void addUsers(@RequestBody Iterable<User> users) {
-		for(User vElement : users) {
-			getUserRepo().save(vElement);
+	public void addUsers(@RequestBody Iterable<Profile> profiles) {
+		for(Profile vElement : profiles) {
+			getProfileRepo().save(vElement);
 		}
 	}
 	
@@ -70,8 +73,8 @@ public class ApiControllers {
 	public void addRandomUser() {
 		String randomNumber = "" + Math.random();
 		String randomUsername = "rUser" + randomNumber.substring(2);
-		User randomUser = new User(randomUsername, "default", randomUsername,  "Random@mail.com", "Random_Number");
-		getUserRepo().save(randomUser);
+		Profile randomUser = new Profile(randomUsername, "default", randomUsername,  "Random@mail.com", "Random_Number");
+		getProfileRepo().save(randomUser);
 	}
 	
 	@PostMapping(value = "/addRoom")	//Add a single room.
@@ -86,11 +89,10 @@ public class ApiControllers {
 		}
 	}
 
-	
 	//Get'er Methods.
 	
-	public UsersRepository getUserRepo() {
-		return this.userRepo;
+	public ProfilesRepository getProfileRepo() {
+		return this.profileRepo;
 	}
 
 	public RoomsRepository getRoomRepo() {

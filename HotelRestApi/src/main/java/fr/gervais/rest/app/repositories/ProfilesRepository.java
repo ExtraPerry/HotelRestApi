@@ -4,9 +4,9 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
-import fr.gervais.rest.app.models.User;
+import fr.gervais.rest.app.models.Profile;
 
 //Create a table for the database.
-public interface UsersRepository extends CrudRepository<User, UUID> {
+public interface ProfilesRepository extends CrudRepository<Profile, UUID> {
 
 }

@@ -1,11 +1,16 @@
 package fr.gervais.rest.app.models;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,6 +28,22 @@ public class Reservation {
 		
 		private Timestamp start;
 		private Timestamp termination;
+		
+		@ManyToMany
+		@JoinTable(
+				name = "RoomReservation",
+				joinColumns = @JoinColumn(name = "reservation_id"),
+				inverseJoinColumns = @JoinColumn(name = "room_id")
+		)
+		Set<Room> roomReservations = new HashSet<>();
+		
+		@ManyToMany
+		@JoinTable(
+				name = "ProfileReservation",
+				joinColumns = @JoinColumn(name = "reservation_id"),
+				inverseJoinColumns = @JoinColumn(name = "profile_id")
+		)
+		Set<Profile> profileReservations = new HashSet<>();
 		
 		//Constructors.
 		
@@ -48,6 +69,14 @@ public class Reservation {
 
 		public Timestamp getTermination() {
 			return this.termination;
+		}
+		
+		public Set<Room> getRoomReservation(){
+			return roomReservations;
+		}
+		
+		public Set<Profile> getProfileReservation(){
+			return profileReservations;
 		}
 
 		public void setStart(Timestamp start) {

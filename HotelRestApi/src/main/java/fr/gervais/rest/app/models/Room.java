@@ -1,12 +1,17 @@
 package fr.gervais.rest.app.models;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Room {
@@ -24,6 +29,9 @@ public class Room {
 	private int size;
 	private int price;
 	
+	@JsonIgnore
+    @ManyToMany(mappedBy = "roomReservations")
+    private Set<Reservation> reservations = new HashSet<>();
 
 	//Constructors.
 	
@@ -58,6 +66,10 @@ public class Room {
 
 	public int getPrice() {
 		return this.price;
+	}
+	
+	public Set<Reservation> getReservations() {
+		return this.reservations;
 	}
 
 	public void setSize(int size) {
